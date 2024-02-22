@@ -1,0 +1,79 @@
+
+<main class="main" *ngIf="!loginSuccess">
+  <div class="content">
+    <div class="left-side">   
+      <h4>Login forms validation in Angular 17</h4>
+      <hr>
+      
+      <div class="register-form">
+        <form
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onLogin()"
+          novalidate       
+         >
+        
+          <div class="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              [(ngModel)]="form.email"
+              required
+              email
+              #email="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+            />
+            @if (f.submitted && email.errors) {
+              <div class="invalid-feedback">
+                @if (email.errors['required']) {
+                <div>Email is required</div>
+                }
+                @if (email.errors['email']) {
+                <div>Email is invalid</div>
+                }
+              </div>
+            }
+          </div>
+      
+          <div class="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              [(ngModel)]="form.password"
+              required
+              minlength="6"
+              maxlength="40"
+              #password="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
+            />
+            @if (f.submitted && password.errors) {
+              <div class="invalid-feedback">
+                  @if (password.errors['required']) {
+                  <div>Password is required</div>
+                  }
+                  @if (password.errors['minlength']) {
+                  <div>Password must be at least 6 characters</div>
+                  }
+                  @if (password.errors['maxlength']) {
+                  <div>Username must not exceed 40 characters</div>
+                  }
+              </div>
+            }
+          </div>  
+          <hr>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary float-right">Login</button>           
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</main>
+
+
+<router-outlet />
